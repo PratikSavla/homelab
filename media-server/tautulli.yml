@@ -1,0 +1,12 @@
+  tautulli:
+    image: ghcr.io/tautulli/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/tautulli/config:/config
+    ports:
+      - 8181:8181

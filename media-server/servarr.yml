@@ -1,0 +1,85 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/radarr/data:/config
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/movies:/movies #optional
+      - CHANGE_TO_COMPOSE_DATA_PATH/qbittorrent/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/sonarr/data:/config
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/tvseries:/tv #optional
+      - CHANGE_TO_COMPOSE_DATA_PATH/qbittorrent/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/prowlarr/data:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - LOG_LEVEL=info
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/flaresolverr/data:/config
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/bazarr/config:/config
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/movies:/movies #optional
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/tvseries:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/overseerr/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped

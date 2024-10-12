@@ -1,0 +1,18 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - VERSION=docker
+      - PLEX_CLAIM= #optional
+    volumes:
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/library:/config
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/tvseries:/tv
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/movies:/movies
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/others:/others
+      - CHANGE_TO_COMPOSE_DATA_PATH/plex/music:/music
+    restart: unless-stopped
